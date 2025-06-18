@@ -1,0 +1,51 @@
+function mousePressed() {
+	if (isAwake && gameState === "bedroom") {
+		gameState = "walkToDoor";
+	}
+	
+	else if (gameState === "black") {
+	// Start player near the bottom
+	x = width / 2;
+	y = height - 80;
+
+	// Reset
+	obstacles = generateObstacles();
+	gamePlayStartTime = millis();
+	gameLostDueToTime = false;
+
+	gameState = "gamePlay";
+}
+	
+	else if (gameState === "gamePlay") {
+		gameState = "black2";
+	}
+	else if (gameState === "black2" && !ballComing) {
+	ballComing = true;
+	ballScale = 0.1;
+}
+	else if (gameState === "fadeToBlack") {
+	playerX = width / 2;
+playerY = fieldLength - 50; // Start at 0-yard line (bottom of the field)
+defenders = generateDefenders();
+gameState = "runningGame";
+}
+	else if (gameState === "endGame") {
+	// Reset everything
+	playerX = width / 2;
+	playerY = fieldLength - 50;
+	defenders = generateDefenders();
+	gameResult = "";
+	gameState = "runningGame";
+		cheer.stop()
+	boo.stop();
+}
+}
+
+function keyPressed() {
+	if (gameState === "gamePlay") {
+		if (keyCode === RIGHT_ARROW) x += 40;
+		else if (keyCode === LEFT_ARROW) x -= 40;
+		else if (keyCode === UP_ARROW) y -= 40;
+		else if (keyCode === DOWN_ARROW) y += 40;
+	}
+}
