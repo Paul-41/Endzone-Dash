@@ -1,0 +1,8 @@
+function preload() {
+	poster = loadImage("poster.jpg")
+	player = loadImage("player.jpg")
+	ball = loadImage("ball.jpg")
+	defender = loadImage("tackler.jpg")
+	boo = loadSound("Boo.jpg")
+	cheer = loadSound("cheering.jpg")
+}
