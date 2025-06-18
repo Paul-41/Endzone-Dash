@@ -1,0 +1,77 @@
+function drawRun() {
+	background('green');
+
+		// Update camera
+		cameraOffset = playerY - height / 2;
+
+		// Draw field lines
+		stroke('white');
+		textAlign(LEFT, CENTER);
+		for (let i = 0; i <= totalYards; i += yardsPerLine) {
+			let fieldY = fieldLength - i * pixelsPerYard; // 0 yd = bottom, 100 yd = top
+			let screenY = fieldY - cameraOffset;
+
+			if (screenY > -50 && screenY < height + 50) {
+				line(0, screenY, width, screenY);
+				noStroke();
+				fill('white');
+				text(`${i} yd`, 10, screenY); // Labels: 0, 5, 10...100
+				stroke('white');
+			}
+		}
+		noStroke();
+
+		// Draw player
+		imageMode(CENTER)
+		image(player, playerX, playerY - cameraOffset, 60, 60);
+
+		// Move and draw defenders
+		imageMode(CENTER);
+		for (let d of defenders) {
+			// Move toward player (diagonally)
+			let dx = playerX - d.x;
+			let dy = playerY - d.y;
+			let distToPlayer = sqrt(dx * dx + dy * dy);
+			d.x += (dx / distToPlayer) * d.speed;
+			d.y += (dy / distToPlayer) * d.speed;
+
+			image(defender, d.x, d.y - cameraOffset, 50, 50);
+
+			// Collision check
+			if (dist(playerX, playerY, d.x, d.y) < 40) {
+				gameResult = "lose";
+				gameState = "endGame";
+			}
+		}
+
+		// Win condition (top of field)
+		if (playerY < 50) {
+			gameResult = "win";
+			gameState = "endGame";
+		}
+    let pace = random(8, 10);
+		if (keyIsDown(LEFT_ARROW) && playerX > 20) {
+			playerX -= pace;
+		}
+		if (keyIsDown(RIGHT_ARROW) && playerX < width - 20) {
+			playerX += pace;
+		}
+		if (keyIsDown(UP_ARROW) && playerY > 0) {
+			playerY -= pace;
+		}
+		if (keyIsDown(DOWN_ARROW) && playerY < fieldLength - 40) {
+			playerY += pace;
+		}
+}
+
+function generateDefenders() {
+	let d = [];
+	for (let i = 0; i < 12; i++) {
+		d.push({
+			x: random(100, width - 100),
+			y: random(200, fieldLength - 200),
+			speed: random(6, 8)
+		});
+	}
+	return d;
+}
