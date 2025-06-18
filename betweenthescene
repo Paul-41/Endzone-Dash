@@ -1,0 +1,70 @@
+function drawFadeBlack() {
+	background('black');
+		fill('white');
+		textAlign(CENTER, CENTER);
+
+		// Narrative buildup
+		textSize(32);
+		text("You caught the ball...", width / 2, height / 2 - 120);
+		textSize(24);
+		text("Now it's all up to you.", width / 2, height / 2 - 80);
+
+		// Gameplay objective
+		textSize(28);
+		text("Score a touchdown and win the game", width / 2, height / 2 - 20);
+		textSize(24);
+		text("Avoid all the people trying to tackle you", width / 2, height / 2 + 20);
+		text("Controls are your arrow keys", width / 2, height / 2 + 60);
+		textSize(40)
+		text("NOW RUN!!!", width / 2, height / 2 + 100);
+
+		// Click prompt
+		textSize(20);
+		text("Click to begin your run", width / 2, height - 100);
+} 
+
+function drawBlack2() {
+	background('black');
+
+		if (!ballComing) {
+			// Initial instruction screen before the animation
+			textAlign(CENTER, CENTER);
+			fill('white');
+			textSize(28);
+			text("You have arrived at your game", width / 2, height / 2 - 60);
+			text("GOOD LUCK!!", width / 2, height / 2 + 65);
+
+			textSize(20);
+			text("You have warmed up and the game has started", width / 2, height / 2 - 35);
+			text("It is now the 4th quarter with 3 seconds left", width / 2, height / 2 - 10);
+			text("The ball is going to you, GAME ON THE LINE!!", width / 2, height / 2 + 15);
+			text("Your team is down, 23-28 and it is 3rd down. You need a touchdown to win it all", width / 2, height / 2 + 40);
+			text("Click to continue", width / 2, height - 100);
+		} else {
+			// Ball zoom-in animation
+			imageMode(CENTER);
+			let ballSize = 1000 * ballScale;
+			image(ball, width / 2, height / 2, ballSize, ballSize);
+
+			if (ballScale < 2.5) {
+				ballScale += 0.03;
+			} else {
+				// Once ball is large enough, go to black screen
+				gameState = "fadeToBlack";
+			}
+		}
+}
+
+function drawBlack() {
+	background('black');
+		fill('white');
+		textAlign(CENTER, CENTER);
+		textSize(28);
+		text("Now you have to go through various obstacles\nto get to your game.", width / 2, height / 2 - 60);
+
+		textSize(20);
+		text("Use the arrow keys to move.", width / 2, height / 2);
+		text("You have 2 minutes to reach the football game.", width / 2, height / 2 + 30);
+		text("If you don't make it, it's game over.", width / 2, height / 2 + 60);
+		text("Click to continue", width / 2, height - 100);
+}
