@@ -1,0 +1,22 @@
+let wakeUpTime = 5000;
+let isAwake = false;
+let gameState = "bedroom";
+let walkProgress = 0;
+let doorOpened = false;
+let x = 0;
+let y = 0;
+let ballScale = 0.1;
+let ballComing = false;
+let playerX, playerY;
+let defenders = [];
+let gameResult = "";
+let cameraOffset = 0;
+const totalYards = 100;
+const yardsPerLine = 5;
+const pixelsPerYard = 50; // Adjust for spacing (increase for wider)
+const fieldLength = totalYards * pixelsPerYard;
+let obstacles = [];
+let gamePlayStartTime;
+let maxTime = 30000; // 1 minute in milliseconds
+let timeLeft = 0;
+let gameLostDueToTime = false;
