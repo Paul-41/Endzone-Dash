@@ -1,0 +1,196 @@
+function setup() {
+	createCanvas(1000, windowHeight);
+	textFont('Arial');
+
+}
+
+function draw() {
+	if (gameState === "endGame") {
+		drawWinLoseScreen()
+		return;
+	}
+	
+	if (gameState === "runningGame") {
+		drawRun()
+		return;
+	}
+
+
+	if (gameState === "fadeToBlack") {
+		drawFadeBlack()
+		return;
+	}
+
+	if (gameState === "black2") {
+		drawBlack2()
+		return;
+	}
+	
+
+
+	if (gameState === "gamePlay") {
+	drawGotoGame();
+
+	return;
+}
+	
+	if (gameState === "black") {
+		drawBlack();
+		return;
+	}
+
+	if (gameState === "walkToDoor") {
+		drawPOVWalk();
+		return;
+	}
+
+	// Normal bedroom state
+	background(200, 220, 255);
+	drawRoom();
+	drawDecor();
+	drawBed();
+	drawDesk();
+	drawBookshelf();
+	drawFootball();
+
+	if (millis() > wakeUpTime) {
+		isAwake = true;
+	}
+
+	drawPerson(isAwake);
+
+	if (isAwake) {
+		showLateMessage();
+		showClickPrompt();
+	}
+}
+
+function drawRoom() {
+	// Floor
+	fill('peru');
+	rect(0, height * 0.8, width, height * 0.2);
+
+	// Bigger window
+	fill('skyblue');
+	rect(width / 2.5, height * 0.50, 200, 180);
+
+	fill('yellow');
+	ellipse(width / 2, height * 0.50 + 90, 60, 60);
+}
+
+function drawDecor() {
+	// Rug under bed (moved left with bed)
+	fill('indigo');
+	ellipse(200, height * 0.8 + 20, 180, 50);
+
+	// Wall poster
+	image(poster, 180, height * 0.55, 100, 150)
+}
+
+function drawBed() {
+	let bedY = height * 0.8 - 80;
+
+	fill('sienna');
+	rect(80, bedY, 250, 80); // moved bed to x = 80
+
+	fill('white');
+	rect(90, bedY + 5, 60, 30, 5); // pillow
+
+	fill('navy');
+	rect(90, bedY + 40, 230, 35); // blanket
+}
+
+function drawPerson(awake) {
+	let bedY = height * 0.8 - 80;
+
+	if (!awake) {
+		fill('peachpuff');
+		ellipse(110, bedY + 20, 30, 30); // head on pillow
+		fill('black');
+		textSize(24);
+		text("Zzz...", 150, bedY);
+	} else {
+		fill('peachpuff');
+		ellipse(180, bedY - 30, 30, 30); // head sitting up
+		rect(170, bedY - 15, 20, 40); // body sitting up
+	}
+}
+
+function drawDesk() {
+	fill('saddlebrown');
+	rect(680, height * 0.8 - 60, 180, 60);
+
+	fill('black');
+	rect(720, height * 0.8 - 110, 100, 50);
+
+	fill('grey');
+	rect(725, height * 0.8 - 20, 90, 10);
+}
+
+function drawBookshelf() {
+	let shelfY = height * 0.8 - 140; // so bottom touches the floor
+	let shelfHeight = 140;
+
+	// Shelf frame (on the ground)
+	fill('saddlebrown');
+	rect(850, shelfY, 100, shelfHeight);
+
+	// Books placed at the bottom inside the shelf
+	let bookBaseY = shelfY + shelfHeight - 60;
+
+	fill('red');
+	rect(860, bookBaseY, 20, 60); // Red book
+	fill('blue');
+	rect(885, bookBaseY - 20, 20, 80); // Blue book (taller)
+	fill('green');
+	rect(910, bookBaseY - 10, 20, 70); // Green book
+}
+
+function drawFootball() {
+	fill('sienna');
+	ellipse(400, height * 0.8 + 20, 50, 30);
+	stroke('white');
+	line(390, height * 0.8 + 20, 410, height * 0.8 + 20);
+	noStroke();
+}
+
+function showLateMessage() {
+	fill('red');
+	textSize(36);
+	textAlign(CENTER, CENTER);
+	text("You're running late for your football game!", width / 2, 50);
+}
+
+function showClickPrompt() {
+	fill('white');
+	textSize(20);
+	textAlign(CENTER, CENTER);
+	text("Click to continue", width / 2, height - 100);
+}
+
+function drawPOVWalk() {
+	background('lightsteelblue'); // neutral wall color
+
+	// Simulate hallway "zooming"
+	walkProgress += 2;
+
+	// Floor
+	fill('peru');
+	rect(0, height * 0.8, width, height * 0.2);
+
+	// Door on the far right
+	let doorX = map(walkProgress, 0, 300, width - 200, width / 2, true);
+	let doorWidth = map(walkProgress, 0, 300, 100, width, true);
+	let doorHeight = map(walkProgress, 0, 300, 200, height, true);
+
+	fill('saddlebrown');
+	rect(doorX, height * 0.8 - doorHeight, doorWidth, doorHeight);
+
+	// Simulate door opening
+	if (walkProgress > 280 && !doorOpened) {
+		doorOpened = true;
+		setTimeout(() => {
+			gameState = "black";
+		}, 1000);
+	}
+}
