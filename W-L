@@ -19,7 +19,10 @@ function drawWinLoseScreen() {
 		fill('white');
 		text("Click to play again", width / 2, height - 100);
 
-		cheer.play();
+		if (!soundPlayed && cheer && cheer.isLoaded()) {
+			cheer.play();
+			soundPlayed = true;
+		}
 	} else if (gameResult === "lose") {
 		background('darkblue');
 		fill('lightgray');
@@ -35,8 +38,23 @@ function drawWinLoseScreen() {
 		fill('white');
 		text("Click to try again", width / 2, height - 100);
 
-		boo.play();
-	} else if (gameLostDueToTime) {
+		if (!soundPlayed && boo && boo.isLoaded()) {
+			boo.play();
+			soundPlayed = true;
+		}
+	}
+}
+
+function drawLoseScreen() {
+	background(0);
+	fill(255, 0, 0);
+	textAlign(CENTER, CENTER);
+	textSize(48);
+	text("You Lost!", width / 2, height / 2 - 40);
+	textSize(24);
+	fill(255);
+	text("Click to try again", width / 2, height / 2 + 20);
+	if (gameLostDueToTime) {
 		background('darkred');
 		fill('white');
 		textAlign(CENTER, CENTER);
