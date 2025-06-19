@@ -9,7 +9,7 @@ function draw() {
 		drawWinLoseScreen()
 		return;
 	}
-	
+
 	if (gameState === "runningGame") {
 		drawRun()
 		return;
@@ -26,14 +26,17 @@ function draw() {
 		return;
 	}
 	
-
+	if (gameState === "loseScreen") {
+		drawLoseScreen();
+		return;
+	}
 
 	if (gameState === "gamePlay") {
-	drawGotoGame();
+		drawGotoGame();
 
-	return;
-}
-	
+		return;
+	}
+
 	if (gameState === "black") {
 		drawBlack();
 		return;
