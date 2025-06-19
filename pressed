@@ -1,4 +1,4 @@
-function mousePressed() {
+ function mousePressed() {
 	if (isAwake && gameState === "bedroom") {
 		gameState = "walkToDoor";
 	}
@@ -36,16 +36,20 @@ gameState = "runningGame";
 	defenders = generateDefenders();
 	gameResult = "";
 	gameState = "runningGame";
-		cheer.stop()
-	boo.stop();
 }
+	 
+	 if (gameState === "loseScreen") {
+		resetGame();
+		gameState = "gamePlay";
+	}
 }
 
 function keyPressed() {
-	if (gameState === "gamePlay") {
-		if (keyCode === RIGHT_ARROW) x += 40;
-		else if (keyCode === LEFT_ARROW) x -= 40;
-		else if (keyCode === UP_ARROW) y -= 40;
-		else if (keyCode === DOWN_ARROW) y += 40;
-	}
+	let jumpY = 30; // match logLaneHeight
+	let jumpX = 40;
+
+	if (keyCode === UP_ARROW) y -= jumpY;
+	else if (keyCode === DOWN_ARROW) y += jumpY;
+	else if (keyCode === LEFT_ARROW) x -= jumpX;
+	else if (keyCode === RIGHT_ARROW) x += jumpX;
 }
