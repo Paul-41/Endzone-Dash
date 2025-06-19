@@ -17,6 +17,7 @@ const pixelsPerYard = 50; // Adjust for spacing (increase for wider)
 const fieldLength = totalYards * pixelsPerYard;
 let obstacles = [];
 let gamePlayStartTime;
-let maxTime = 30000; // 1 minute in milliseconds
+let maxTime = 15000; 
 let timeLeft = 0;
 let gameLostDueToTime = false;
+let soundPlayed = false;
