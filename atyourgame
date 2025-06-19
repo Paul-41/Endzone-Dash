@@ -69,7 +69,7 @@ function generateDefenders() {
 	for (let i = 0; i < 12; i++) {
 		d.push({
 			x: random(100, width - 100),
-			y: random(200, fieldLength - 200),
+			y: random(200, fieldLength - 300),
 			speed: random(6, 8)
 		});
 	}
